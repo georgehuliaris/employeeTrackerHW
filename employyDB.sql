@@ -4,8 +4,7 @@ USE employyDB;
 
 CREATE TABLE department(
 	id INT NOT NULL
-    , name VARCHAR(30) NULL
-    , song VARCHAR(100) NULL
+    , name VARCHAR(30) NOT NULL
 , PRIMARY KEY(id)
 );
 CREATE TABLE role(
