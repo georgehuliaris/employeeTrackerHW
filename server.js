@@ -1,6 +1,21 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
+const connection = mysql.createConnection({
+    host: 'localhost',
+    // Your port, if not 3306
+    port: 3300,
+    user: 'root',
+    password: 'BootCamp',
+    database: 'employyDB',
+  });
+  
+  connection.connect((err) => {
+    if (err) throw err;
+    console.log(`connected as id ${connection.threadId}`);
+    connection.end();
+  });
+
 inquirer
   .prompt([
     {
