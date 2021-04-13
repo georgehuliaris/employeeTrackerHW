@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const mysql = require("mysql");
+const express = require("express");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -79,5 +80,22 @@ function departmentQuestions() {
         })
     });
 }
+function roleQuestions() {
+    inquirer
+      .prompt([
+        {
+          name: "roleAddition",
+          type: "input",
+          message: "What department would you like to add?",
+        },
+      ])
+      .then((answers) => {
+          var sqlQuery = `INSERT INTO department (role) VALUES ('${answers.roleAddition}')`
+          connection.query(sqlQuery, function (err, result) {
+              if (err) throw err;
+              console.log("success")
+          })
+      });
+  }
 
 
