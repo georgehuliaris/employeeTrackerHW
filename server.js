@@ -14,59 +14,70 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
-  connection.end();
+//   connection.end();
 });
 
 inquirer
   .prompt([
     {
-      type: "input",
-      name: "departmentName",
-      message: "What is your department name?",
-    },
-    {
-      type: "input",
-      name: "role",
-      message: "What is your role at this company?",
-    },
-    {
-      type: "input",
-      name: "salary",
-      message: "What is your current annual salary?",
-    },
-    {
-      type: "input",
-      name: "department_id",
-      message: "What department do you work in?",
-    },
-    {
-      type: "input",
-      name: "first_name",
-      message: "What is your first name?",
-    },
-    {
-      type: "input",
-      name: "last_name",
-      message: "What is your last name?",
-    },
-    {
-      type: "input",
-      name: "role_id",
-      message: "What is your role id?",
-    },
-    {
-      type: "input",
-      name: "manager_id",
-      message: "What is your manager's name?",
+      type: "list",
+      name: "firstQuestions",
+      message: "What do you want to do?",
+      choices: [
+        "Add departments",
+        "Add roles",
+        "Add employees",
+        "View departments",
+        "View roles",
+        "View employees",
+        "Update employee roles",
+      ],
     },
   ])
-  .then((data) => {
-    const filename = `${data.toLowerCase().split(" ").join("")}.json`;
-    console.log(data);
-    //     fs.writeFile(filename, JSON.stringify(data, null, "\t"), (err) =>
-    //       err ? console.log(err) : console.log("Success!")
-    //     );
+  .then((answers) => {
+    switch (answers.firstQuestions) {
+      case "Add departments":
+        departmentQuestions();
+        break;
+      case "Add roles":
+        console.log("Add roles?");
+        break;
+      case "Add employees":
+        console.log("Add employees?");
+        break;
+      case "View departments":
+        console.log("View departments?");
+        break;
+      case "View roles":
+        console.log("View roles?");
+        break;
+      case "View employees":
+        console.log("View employees?");
+        break;
+      case "Update employee roles":
+        console.log("Update employee roles?");
+        break;
+      default:
+        console.log("something went wrong");
+    }
   });
-// function writeToFile(fileName, data) {}
 
-// still need to write answers to file
+function departmentQuestions() {
+  inquirer
+    .prompt([
+      {
+        name: "departmentAddition",
+        type: "input",
+        message: "What department would you like to add?",
+      },
+    ])
+    .then((answers) => {
+        var sqlQuery = `INSERT INTO department (departmentName) VALUES ('${answers.departmentAddition}')`
+        connection.query(sqlQuery, function (err, result) {
+            if (err) throw err;
+            console.log("success")
+        })
+    });
+}
+
+
