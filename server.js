@@ -41,21 +41,27 @@ inquirer
         departmentQuestions();
         break;
       case "Add roles":
+        addRoles();
         console.log("Add roles?");
         break;
       case "Add employees":
+        addEmployees();
         console.log("Add employees?");
         break;
       case "View departments":
+        viewDepartments();
         console.log("View departments?");
         break;
       case "View roles":
+        viewRoles();
         console.log("View roles?");
         break;
       case "View employees":
+        viewEmployees();
         console.log("View employees?");
         break;
       case "Update employee roles":
+        updateEmployee();
         console.log("Update employee roles?");
         break;
       default:
@@ -80,7 +86,25 @@ function departmentQuestions() {
         })
     });
 }
+//add role questions
 function roleQuestions() {
+    inquirer
+      .prompt([
+        {
+          name: "roleAddition",
+          type: "input",
+          message: "What is your role at the company??",
+        },
+      ])
+      .then((answers) => {
+          var sqlQuery = `INSERT INTO department (role) VALUES ('${answers.roleAddition}')`
+          connection.query(sqlQuery, function (err, result) {
+              if (err) throw err;
+              console.log("success")
+          })
+      });
+  }
+  function roleQuestions() {
     inquirer
       .prompt([
         {
